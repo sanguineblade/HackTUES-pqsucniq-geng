@@ -32,10 +32,12 @@ def runDistanceMeasurementTk():
     distanceLabel1 = tk.Label(window, text="Distance: ", anchor='center', font=customFont)
     distanceLabel2 = tk.Label(window, text="Distance: ", anchor='center', font=customFont)
     distanceLabel3 = tk.Label(window, text="Posture: ", anchor='center', font=customFont)
+    adviceLabel = tk.Label(window, text="", anchor='center', font=customFont)
 
     distanceLabel1.pack()
     distanceLabel2.pack() 
     distanceLabel3.pack()
+    adviceLabel.pack()
 
     def isPostureCorrect(distance1, distance2):
         return abs(distance1 - distance2) < distanceBound
@@ -44,17 +46,26 @@ def runDistanceMeasurementTk():
         distance1 = int(sensor1.distance * 100)
         distance2 = int(sensor2.distance * 100)
 
-        distanceLabel1.config(fg="red", text="Distance: {} cm\nHi!".format(distance1))
-        distanceLabel2.config(fg="red", text="Distance: {} cm\nHi!".format(distance2))
-        distanceLabel3.config(fg="red", text="Posture: {} ".format(isPostureCorrect(distance1, distance2)))
+        distanceLabel1.config(fg="blue", text="Distance: {} cm\n".format(distance1))
+        distanceLabel2.config(fg="blue", text="Distance: {} cm\n".format(distance2))
+        if isPostureCorrect(distance1, distance2):
+            distanceLabel3.config(fg="green", text="Posture: good")
+        else:
+            distanceLabel3.config(fg="red", text="Posture: incorrect")
 
         window.after(100, measureDistance)
+
+  
+    def timerEndCallback():
+        adviceLabel.config(text=adviceLabel.cget("text") + "\nDrink water, stand up and walk for abit.")
+
+    window.after(3600 * 1000, timerEndCallback)
 
     measureDistance()
     window.mainloop()
 
 def timerCallback():
-    print("One hour timer reached.")
+    print("One hour timer reached.\ndrink water, stand up and walk for abit.")
 
 def runYoloDetection():
     parser = argparse.ArgumentParser()
