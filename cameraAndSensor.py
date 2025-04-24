@@ -65,7 +65,7 @@ def runDistanceMeasurementTk():
     window.mainloop()
 
 def timerCallback():
-    print("One hour timer reached.\ndrink water, stand up and walk for abit.")
+    print("One hour timer reached.\nDrink water, stand up and walk for abit.")
 
 def runYoloDetection():
     parser = argparse.ArgumentParser()
